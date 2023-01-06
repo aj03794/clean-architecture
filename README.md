@@ -18,7 +18,7 @@ Software architects strive to define modules, components, and services that are 
 
 - Before polymorphism, a typical calling tree contained: main functions called high-level functions, which called mid-level functions, which called low-level functions
 
-![alt text](Images/image1.png)
+![alt text](images/image1.png)
 
 For main to call one of high-level functions it had to mention the name of the module that contained that function
 - In C, this was a `#include`
@@ -29,7 +29,7 @@ For main to call one of high-level functions it had to mention the name of the m
 - Flow control was dictated by the behavior of the system
 - Source code dependencies were dictated by that flow of control
 
-![alt text](Images/image2.png)
+![alt text](images/image2.png)
 - Module HL1 calls the F() function in module ML1. The fact that it calls this function through an interface is a source code contrivance
 - At runtime, the interface doens't exist. HL1 simply calls F() within ML1
 
@@ -44,7 +44,7 @@ For main to call one of high-level functions it had to mention the name of the m
 - No matter which module does the calling and which module is called, the software architect can point the source code dependency in either direction.
 
 - As an example, you can rearrange the source code dependenices of your system so that the database and UI depend on the business rules, rather than the other way around.
-![alt text](Images/image2.png)
+![alt text](images/image2.png)
 - This means that the UI and the database can be plugins to the business rules.  The source code of the business rules never mentions the UI or the database.
 
 - As a result, the business rules, the UI, and the database can be compiled into three separate components or deployment units (jar files, DLL, gem files, etc) that have the same dependencies as the source code.  The component containing the business rules will not depened on the components containing the UI and database.
@@ -69,7 +69,7 @@ For main to call one of high-level functions it had to mention the name of the m
 - Immutable components perform their tasks in a purely functional way without using any mutable variables
 - Immutable components communicate with one or more other components that are not purely functional
 
-![alt text](Images/image4.png)
+![alt text](images/image4.png)
 
 Since mutating state exposes those components to all problems of concurrency, it is common practice to use some kind of `transactional memory` to protect mutable variables from concurrent updates and race conditions
 - Transactional memory treats variables in memory the same way a database treats records on disk.
@@ -150,7 +150,7 @@ D - DIP - Dependency Inversion Principle
 Example: 
 - Example is the `Employee` class from a payroll application
 - It has 3 methods: calculatePay(), reportHours(), and save()
-![alt text](Images/image5.png)
+![alt text](images/image5.png)
 
 This class violates the SRP because those 3 methods are responsible to 3 very different actors
 - The `calculatePay()` method is specified by the accounting department, which reports to the CFO
@@ -163,7 +163,7 @@ This class violates the SRP because those 3 methods are responsible to 3 very di
 For example:
 - Suppose `calculatePay()` function and the `reportHours()` function share a common algorithm for calculating non-overtime hours
 - Suppose developers, who are careful not to duplicate code, put that algorithm into a function named `regularHours()`
-![alt text](Images/image6.png)
+![alt text](images/image6.png)
 - Suppose CFO's team decides that the way non-overtime hours are calculated need to be tweaked. In contrast, the COO's team in HR does not want that particular tweak
 - A developer is asked to make change, and sees the convenient `regularHours()` function called by the `calculatePay()` method
 - Developer does not notice that the function is also called by `reportHours()` function
@@ -199,11 +199,11 @@ Example:
 - Each class holds only the source code necessary for its particular function
 - 3 classes are not allowed to know about each other.
 - Accidental duplication is avoided this way
-![alt text](Images/image7.png)
+![alt text](images/image7.png)
 
 - Downside of this solution is that developers now have 3 classes that they have to instantiate and track. Common solution to this dilemma is to use the `Facade` pattern.
 
-![alt text](Images/image8.png)
+![alt text](images/image8.png)
 
 - `EmployeeFacade` contains very little code.
 - Reponsible for instantiating and delegating to the classes with the functions.
@@ -211,7 +211,7 @@ Example:
 - Some developers prefer to keep the most important business rules closer to the data.
 - This can be done by keeping the most important method in the original `Employee` class and then using that class as a `Facade` for the lesser functions
 
-![alt text](Images/image9.png)
+![alt text](images/image9.png)
 
 - May object to these solutions on the basis that every class would contain just one function.
 - That is not the case
@@ -260,7 +260,7 @@ Example:
 - By applying SRP, we might come up with the data flow in the picture below.
 - Some analysis procedure inspects the financial data and produces reportable data, which is then formatted appropriately by the two reporter processes
 
-![alt text](Images/image10.png)
+![alt text](images/image10.png)
 
 - Essential insight here is that generating the report involves two separate responsibilites
 - Calculation of reported data, and presentation of that data in to web and printer-friendly form
@@ -274,7 +274,7 @@ Example:
 - Lower right is the `Database`
 - At the lower left, there are four components that represent the `Presenters` and the `Views`
 
-![alt text](Images/image11.png)
+![alt text](images/image11.png)
 
 - Classes marked with `<I>` are interacts
 - Those marked with `<DS>` are structures
@@ -290,7 +290,7 @@ Example:
 - This means that all component relationships are unidirectional as show in figure below.
 - These arrows point toward the components that we want to protect from change
 
-![alt text](Images/image12.png)
+![alt text](images/image12.png)
 
 - `If component A should be protected from changes in component B, then component B should depend on component A`
 
@@ -355,7 +355,7 @@ Excerpt From: Robert C. Martin. “Clean Architecture: A Craftsman's Guide to So
 - There are two `subtypes` of `License`: `PersonalLicense` and `BusinessLicense`
 - They use different algorithms to calc license fee
 
-![alt text](Images/Figure-9.1.png)
+![alt text](images/Figure-9.1.png)
 
 - This design conforms to `LSP` because the behavior of the `Billing` application does not depend, in any way, on which of the two subtypes is used.
 - Both subtypes are subsitutable for the `License` type
@@ -364,7 +364,7 @@ Excerpt From: Robert C. Martin. “Clean Architecture: A Craftsman's Guide to So
 
 - Canonical example of violation of LSP is famed `square/rectangle` problem
 
-![alt text](Images/Figure-9.2.png)
+![alt text](images/Figure-9.2.png)
 
 - In this example, `Square` is not a proper subtype of `Rectangle` because the height and width of the `Rectangle` are independently mutable
 - In contract, height and width of the `Square` must change together
@@ -442,7 +442,7 @@ if (driver.getDispatchUri().startsWith("acme.com"))...
 - Architect would have to insulate the system from bugs like this by creating some kind of dispatch command creation module that was driven by a configuration database keyed by the dispatch URI
 - May look something like:
 
-![alt text](Images/image13.png)
+![alt text](images/image13.png)
 
 - Architect has had to add a significant and complex mechanism to deal with the fact that the interfaces of the restful services are not all subsitutable
 
@@ -508,7 +508,7 @@ if (driver.getDispatchUri().startsWith("acme.com"))...
 - To do this w/o creating a source code dependency on the `ConcreteImpl`, the `Application` calls the `makeSvc` method of the `ServiceFactoryImpl` class which derives from the `ServiceFactory`
 - That implementation instantiates the `ConcreteImpl` and returns it as a `Service`
 
-![alt text](Images/Figure-11.1.png)
+![alt text](images/Figure-11.1.png)
 
 - The curved line is the architectural boundary
 - Separates the abstract from the concrete 
@@ -676,7 +676,7 @@ Don't force users of a component to depend on things they don't need
 - Figure 13.1 is a tension diagram that shows how 3 principles of cohesion interact with each other
 - Edges of diagram describe cost of abandoning the principle on the opposite vertex
 
-![alt text](Images/Figure-13.1.png)
+![alt text](images/Figure-13.1.png)
 
 - Architect who focuses on just REP and CRP will find that too many components are impaced when simple changes are made
 - If architect focuses too strongly on CCP and REP will cause too many unneeded releases to be generated
@@ -751,7 +751,7 @@ Don't force users of a component to depend on things they don't need
 - Components are `nodes`
 - Dependency relationships are `directed edges`
 
-![alt text](Images/Figure-14.1.png)
+![alt text](images/Figure-14.1.png)
 
 - Regardless of which component you begin it, it is impossible to follow the dependency relationships and wind up back at the component
 - This structure has no cycles
@@ -792,7 +792,7 @@ Don't force users of a component to depend on things they don't need
 - `Entities`, `Authorizer`, and `Interactors` have, in effect, become one large component - which means that all of the devs working on any of these components will experience the dreaded `morning after syndrome`
 - They will be stepping over one another b/c they must all use exactly the same release of one another's components
 
-![alt text](Images/Figure-14.2.png)
+![alt text](images/Figure-14.2.png)
 
 - This is just part of the trouble
 - COnsider what happens when we want to test the `Entities` component
@@ -816,11 +816,11 @@ Don't force users of a component to depend on things they don't need
 
 1. Apply Dependency Inversion Principle (DIP). In case of Figure 14.3, we could create an interface that has the methods that `User` needs. Could then put that interface into `Entities` and inherit it into `Authorizer`.  This inverts the dependency between `Entities` and `Authorizer`, thereby breaking the cycle
 
-![alt text](Images/Figure-14.3.png)
+![alt text](images/Figure-14.3.png)
 
 2. Create a new component that both `Entities` and `Authorizer` depend on. Move the class(es) that they both depend on into that new component
 
-![alt text](Images/Figure-14.4.png)
+![alt text](images/Figure-14.4.png)
 
 ###### The "Jitters"
 
@@ -898,14 +898,14 @@ Don't force users of a component to depend on things they don't need
 - Conversely, x depends onnothing, so it has not external influence to make it change
 - We say it is independent
 
-![alt text](Images/Figure-14.5.png)
+![alt text](images/Figure-14.5.png)
 
 - Figure 14.6 shows Y which is a very unstable component
 - No other components depend on Y, so we say that it is irresponsibile
 - Y also has 3 components that it depends on, so changes may come from 3 external sources
 - Y is dependent
 
-![alt text](Images/Figure-14.6.png)
+![alt text](images/Figure-14.6.png)
 
 ###### Stability Metrics
 
@@ -921,7 +921,7 @@ Don't force users of a component to depend on things they don't need
 - The `Fan-in` and `Fan-out` metrics are calculated by counting number of `classes` outside the component in question that have dependencies with classes inside the component in question.
 - Consider Figure 14.7
 
-![alt text](Images/Figure-14.7.png)
+![alt text](images/Figure-14.7.png)
 
 - Want to calculate stability of coomponent `Cc`
 - 3 classes outside `Cc` that depend on
@@ -954,11 +954,11 @@ Don't force users of a component to depend on things they don't need
 - Changeable components are on top and depend on a stable component at the bottom
 - Putting unstable components at the bottom of a diagram is a useful convetion because any arrow that points `up` is violating the SDP (and ADP)
 
-![alt text](Images/Figure-14.8.png)
+![alt text](images/Figure-14.8.png)
 
 - Diagram in 14.9 shows how the SDP can be violated
 
-![alt text](Images/Figure-14.9.png)
+![alt text](images/Figure-14.9.png)
 
 - `Flexible` is a component that we have designed to be easy to change
 - We want `Flexible` to be unstable
@@ -971,7 +971,7 @@ Don't force users of a component to depend on things they don't need
 - Why does this dependency exist
 - Assume there is a class `c` within `Flexible` that another class `U` within `Stable` needs to use (Figure 14.10)
 
-![alt text](Images/Figure-14.10.png)
+![alt text](images/Figure-14.10.png)
 
 - We can fix this by employing DIP
 - Create interface class called `US` and put it ina  component named `UServer`
@@ -981,7 +981,7 @@ Don't force users of a component to depend on things they don't need
 - UServer is very stable (`I=0`), and `Flexible` retains its necessary instability (`I=1`)
 - All dependencies now flow in the direction of `decreasing I`
 
-![alt text](Images/Figure-14.11.png)
+![alt text](images/Figure-14.11.png)
 
 ######## Abstract Components
 
@@ -1051,7 +1051,7 @@ Abstract classes are classes that contain one or more abstract methods. An abstr
 - If we plot two `good` kinds of components on this graph, we find that compnents that are maximally stable and abstract are at upper left (0, 1)
 - Components that are maximally stable and concrete are at lower left (1, 0)
 
-![alt text](Images/Figure-14.12.png)
+![alt text](images/Figure-14.12.png)
 
 - Not all components fall into one of these two positions
 - Components often have `degrees of abstraction` and stability
@@ -1063,7 +1063,7 @@ Abstract classes are classes that contain one or more abstract methods. An abstr
 - Cannot enforce a rule that all components sit at either (0, 1) or (1, 0) we must assume that there is a locus of points on the A/I graph that defines reasonable positions for components
 - Can infer that the locus is by finding the areas where components `should not be` - by determining zones of `exclusion` (Figure 11.13)
 
-![alt text](Images/Figure-14.13.png)
+![alt text](images/Figure-14.13.png)
 
 - Consider component in area (0, 0)
 - Highly stable and concrete component
@@ -1139,7 +1139,7 @@ Abstract classes are classes that contain one or more abstract methods. An abstr
 `Aberrant: departing from an accepted standard.`
 - They are either very abstract with few dependents or very concrete with many dependents
 
-![alt text](Images/Figure-14.14.png)
+![alt text](images/Figure-14.14.png)
 
 - Another way to use metrics is to plot the D metric of a component over time
 - Graph in 14.15 is a mock-up of such a plot
@@ -1147,7 +1147,7 @@ Abstract classes are classes that contain one or more abstract methods. An abstr
 - Plot shows a control threshold at `D = 0.1`
 - R2.1 point has exceeded control limit, so it would be worth while to find out why this component is so far from main sequence
 
-![alt text](Images/Figure-14.15.png)
+![alt text](images/Figure-14.15.png)
 
 ####### Conclusion
 
@@ -1545,7 +1545,7 @@ Any organization that designs a system will produce a design whose structure is 
 - The `BusinessRules` use the `DatabaseInterface` to load and save data
 - The `DatabaseAccess` implements the interface and directs the operation of the actual database
 
-![alt text](Images/Figure-17.1.png)
+![alt text](images/Figure-17.1.png)
 
 - Classes and interfaces in this diagram are symbolic
 - In a real application there would be many business rule classes, many database interface classes, and may database access implementations
@@ -1553,7 +1553,7 @@ Any organization that designs a system will produce a design whose structure is 
 
 - The boundar is drawn across the inheritance relationship, just below `DatabaseInterface` (Figure 17.2)
 
-![alt text](Images/Figure-17.2.png)
+![alt text](images/Figure-17.2.png)
 
 - Note the two arrows leaving the `DatabaseAccess` class
 - Those two arrows point away from the `DatabaseAccess` class
@@ -1561,7 +1561,7 @@ Any organization that designs a system will produce a design whose structure is 
 
 - Next is a component that contains many business rules, and the component that contains the database and all its access classes (Figure 17.3)
 
-![alt text](Images/Figure-17.3.png)
+![alt text](images/Figure-17.3.png)
 
 - Note the direction of the arrow
 - The `Database` knows about the `BusinessRules`
@@ -1593,7 +1593,7 @@ Any organization that designs a system will produce a design whose structure is 
 - Arrow shows which component knows about the other, and therefore, which components cares about the other
 - The `GUI` cares about the `BusinessRules`
 
-![alt text](Images/Figure-17.4.png)
+![alt text](images/Figure-17.4.png)
 
 ######## Plugin Architecture
 
@@ -1603,7 +1603,7 @@ Any organization that designs a system will produce a design whose structure is 
 - History of software development technology is the story of how to conveniently create plugins to establish a scalable and maintainable system architecture
 - Core business rules are kept separate from, and independent of, those components that are either optional or that can be implemented in different forms
 
-![alt text](Images/Figure-17.5.png)
+![alt text](images/Figure-17.5.png)
 
 - B/c the user interface in this design is considered to be a plugin, we have made it possible to plug into many different kinds of UIs
 - Could be web based, client/server based, SOA based, console based, or based on any other kind of user interface technology
@@ -1625,7 +1625,7 @@ Any organization that designs a system will produce a design whose structure is 
 - Nothing that the ReSharper team could do to disturb the Visual Studio team
 - But Visual Studio team could completely disable the ReSharper team if they so desired
 
-![alt text](Images/Figure-17.6.png)
+![alt text](images/Figure-17.6.png)
 
 - Deeply asymmetric relationship
 - One that we desire to have in our own systems
@@ -1692,7 +1692,7 @@ Any organization that designs a system will produce a design whose structure is 
 - `Data` may be passed as a function argument or by some other more elaborate means
 - Note that the definition of `Data` is on the `called` side of the boundary
 
-![alt text](Images/Figure-17.7.png)
+![alt text](images/Figure-17.7.png)
 
 - When a high-level client needs to invoke a lower-level service, dynamic polymorphism is used to invert dependency against flow of control
 
@@ -1703,7 +1703,7 @@ Any organization that designs a system will produce a design whose structure is 
 - Note, however, that all dependencies cross the boundary from right to left `toward the higher-level component`
 - Note, also, that the definition of the data structure is on the calling side of the boundary
 
-![alt text](Images/Figure-17.8.png)
+![alt text](images/Figure-17.8.png)
 
  - Even in monolithic, statically linked executable, this kind of disciplined partitioning can greatly aid the job of developing, testing, and deploying the project
  - Teams can work independetly of each other on their own components w/o treading on each other's toes
@@ -1834,7 +1834,7 @@ https://www.webopedia.com/TERM/D/data_marshalling.html
 - Data flows are shown as curved solid arrows
 - Properly designed source code dependencies are shown as straight dashed lines
 
-![alt text](Images/Figure-17.9.png)
+![alt text](images/Figure-17.9.png)
 
 - The `Translate` component is the highest-level component in this system b/c it is the component that is farthest from the inputs and outputs
 
@@ -1859,7 +1859,7 @@ Excerpt From: Robert C. Martin. “Clean Architecture: A Craftsman's Guide to So
 - All the dependencies crossing that border point inward
 - This unit is the highest-level element in the system
 
-![alt text](Images/Figure-19.2.png)
+![alt text](images/Figure-19.2.png)
 
 - `ConsoleReader` and `ConsoleReader` are shown here as classes
 - They are low level b/c they are close to the inputs and outputs
@@ -1882,7 +1882,7 @@ Excerpt From: Robert C. Martin. “Clean Architecture: A Craftsman's Guide to So
 - Component diagram in Figure 19.3 shows this arrangement
 - `Encryption` component knows nothing of the IODevices component; the `IODevices` component depends on the `Encryption` component
 
-![alt text](Images/Figure-19.3.png)
+![alt text](images/Figure-19.3.png)
 
 ######## Conclusion
 
@@ -1920,7 +1920,7 @@ Excerpt From: Robert C. Martin. “Clean Architecture: A Craftsman's Guide to So
 - In Figure 20.1, it shows what our `Loan Entity` might look like as a class in UML
 - 3 pieces of Critical Business Data, and presents 3 related Critical Business Rules at its interface
 
-![alt text](Images/Figure-20.1.png)
+![alt text](images/Figure-20.1.png)
 
 - Wheb we create this kind of class, we are gathering together the software that implements a concept that is critical to the business, and separating it from every other concern in the automated system we are building
 - Class stands alone as a representative of business
@@ -1950,7 +1950,7 @@ Excerpt From: Robert C. Martin. “Clean Architecture: A Craftsman's Guide to So
 - Notice in last line it metiones Customer
 - Reference to Customer entity, which contains the Critical Business Rules that govern the relationship between the bank and its customers
 
-![alt text](Images/Figure-20.2.png)
+![alt text](images/Figure-20.2.png)
 
 - Use cases contain the rules that specify how and when the Critical Business Rules within the Entities are invoked
 - Use cases control the dance of Entities
@@ -2103,7 +2103,7 @@ Each of these architectures have the following characteristics
 
 - Diagram in Figure 22.1, is attempt at integrating all these architectures into single actionable idea
 
-![alt text](Images/Figure-22.1.png)
+![alt text](images/Figure-22.1.png)
 
 ######## The Dependency Rule
 
@@ -2225,7 +2225,7 @@ Each of these architectures have the following characteristics
 - Upon completion, the `UseCaseInteractor` gathers data form the `Entities` and constructs the `OutputData` as another plain old Java object
 - `OutputData` is then passed through the `OutputBoundary` interface to the `Presenter`
 
-![alt text](Images/Figure-22.2.png)
+![alt text](images/Figure-22.2.png)
 
 - Job of the `Presenter` is to repackage the `OutputData` into viewable from as the `ViewModel` which is yet another plain Java object
 - `ViewModel` contains mostly `Strings` and flags that the `View` uses to display the data
@@ -2365,7 +2365,7 @@ Each of these architectures have the following characteristics
  - Exemplifies the `Strategy` pattern
  - A `ServiceBoundary` interface is used by clients and implemented by `ServiceImpl` classes
 
- ![alt text](Images/Figure-24.1.png)
+ ![alt text](images/Figure-24.1.png)
 
  - Should be clear that this sets the stage for a future architectural boundary
  - This necessary dependency inversion is in place in an attempt to isolate the `Client` from the `ServiceImpl`
@@ -2378,7 +2378,7 @@ Each of these architectures have the following characteristics
  - In this case, even dependency inversion is sacrificed
  - Boundary is simply defined by the `Facade` class which lists all the services as methods, and deploys the service calls that classes that the client is not supposed to access
 
- ![alt text](Images/Figure-24.2.png)
+ ![alt text](images/Figure-24.2.png)
 
 - Note, that the `Client` has the transitive dependency on all those service classes
 - In static languages, a change to the source code in one of the `Service` classes will force the `Client` to recompile
@@ -2419,7 +2419,7 @@ Each of these architectures have the following characteristics
 - If source code dependencies are properly managed (like in Figure 25.1), then any number of UI components can reuse the same game rules
 - Game rules do not know, nor do they care, which human language is used 
 
- ![alt text](Images/Figure-25.1.png)
+ ![alt text](images/Figure-25.1.png)
 
  - Assume that state of game is manipulated on some persistent storage (flash, cloud, or just RAM)
  - In any of those cases, we don't want game rules to know details
@@ -2427,7 +2427,7 @@ Each of these architectures have the following characteristics
 
  - Don't want game rules to know anything about different kinds of data storage, so the dependencies have to be properly directed following the dependency rule as show in Figure 25.2
 
-  ![alt text](Images/Figure-25.2.png)
+  ![alt text](images/Figure-25.2.png)
 
  ######## Clean Architecture?
 
@@ -2441,7 +2441,7 @@ Each of these architectures have the following characteristics
  - That means that there is a potential architectural boundary defined by this axis
  - Perhaps we should construct an API that crosses that boundary and isolates the language from the communications mechanism; that idea is illustrated in Figure 25.3
 
-  ![alt text](Images/Figure-25.3.png)
+  ![alt text](images/Figure-25.3.png)
 
  - Dashed outlines indicate abstract components that define an API that is implemented by the components above or below them
 - For example, the `Language` API is implemented in both `English` and `Spanish`
@@ -2463,7 +2463,7 @@ Each of these architectures have the following characteristics
 
 - Can simply this diagram by eliminating all the variations and focusing on just the API components (Figure 25.4)
 
-![alt text](Images/Figure-25.4.png)
+![alt text](images/Figure-25.4.png)
 
 - Notice that all diagrams are oriented so that all arrows point up
 - This puts `GameRules` at the top
@@ -2489,7 +2489,7 @@ Each of these architectures have the following characteristics
 - In this case, we would need a network component (like in 25.5)
 - This organization divides the data flow into 3 streams, all controlled by the `GameRules`
 
-![alt text](Images/Figure-25.5.png)
+![alt text](images/Figure-25.5.png)
 
 - A sthe system becomes more complex, the component may split into such streams
 
@@ -2509,7 +2509,7 @@ Each of these architectures have the following characteristics
 - Higher-level policy would then manage the state of the player (Figure 25.6)
 - Eventually the policy would decide whether the player wins or loses
 
-![alt text](Images/Figure-25.6.png)
+![alt text](images/Figure-25.6.png)
 
 - Is this an architectural boundary?
 - Do we need an API that separates `MoveManagement` from `PlayerManagement`
@@ -2732,7 +2732,7 @@ Page 357 code being talked about
 - The `TaxiSelector` service takes the user's criteria of cost, time, luxury, and so forth, and chooses an appropriate taxi from among the candidates
 - Hands that taxi off to the `TaxiDispatcher` service, which orders the appropriate taxi
 
-![alt text](Images/Figure-27.1.png)
+![alt text](images/Figure-27.1.png)
 
 - Suppose that this system has been in operation for more than a year
 - Staff of devs have been developing new features while maintaining and operating new systems
@@ -2780,7 +2780,7 @@ Page 357 code being talked about
 
 - Thus, the Kitty feature is decoupled, and independently developable and deployable
 
-![alt text](Images/Figure-27.2.png)
+![alt text](images/Figure-27.2.png)
 
 ######## Component-Based Services
 
@@ -2795,7 +2795,7 @@ Page 357 code being talked about
 - The services still exist as before, but each has its own internal component design, allowing new features to be added as new derivative classes
 - Those derivative classes live within their own components
 
-![alt text](Images/Figure-27.3.png)
+![alt text](images/Figure-27.3.png)
 
 ######## Cross-Cutting Concerns
 
@@ -2805,7 +2805,7 @@ Page 357 code being talked about
 - To deal w/ cross-cutting concerns that all significant systems face, services must be designed w/ internal component architectures that folloe the Dependency Rule, as show in Figure 27.4
 - Those services do not define the architectural boundaries of the system; instead, the components within the services do
 
-![alt text](Images/Figure-27.4.png)
+![alt text](images/Figure-27.4.png)
 
 ######## Conclusion
 
